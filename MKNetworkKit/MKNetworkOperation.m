@@ -755,6 +755,17 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
        thisFile[@"filepath"], thisFile[@"mimetype"]];
     }];
     
+    // Additional curl args for Client Cert Support
+    if (self.clientCertificate) {
+        [displayString appendFormat:@" --cert \"%@\"", self.clientCertificate];
+    }
+    if (self.clientCertificatePassword) {
+        [displayString appendFormat:@" --pass \"%@\"", self.clientCertificatePassword];
+    }
+    if (self.shouldContinueWithInvalidCertificate) {
+        [displayString appendFormat:@" -k"];
+    }
+    
     /* Not sure how to do this via curl
      [self.dataToBePosted enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
      
